@@ -1,9 +1,10 @@
 import streamlit as st
 import torch
 import torch.nn as nn
-from torchvision import models, transforms
+from torchvision import transforms
 from torchvision.models import resnet18, ResNet18_Weights
 from PIL import Image
+from pathlib import Path
 
 # Page config
 st.set_page_config(
@@ -12,7 +13,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🌿 Plant Disease Detector")
+st.title("Plant Disease Detector")
 st.write("Upload a leaf image to detect the plant condition.")
 
 # Class names
@@ -24,14 +25,20 @@ class_names = [
     "tomato_late_blight"
 ]
 
+# Resolve model path safely
+BASE_DIR = Path(__file__).parent
+MODEL_PATH = BASE_DIR / "best_model_ft.pth"
+
 # Load model
 @st.cache_resource
 def load_model():
-    
+    if not MODEL_PATH.exists():
+        st.error("Model file not found. Make sure 'best_model_ft.pth' is in the app directory.")
+        st.stop()
+
     model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
-    # model = models.resnet18(pretrained=False)
     model.fc = nn.Linear(model.fc.in_features, len(class_names))
-    model.load_state_dict(torch.load("best_model_ft.pth", map_location="cpu"))
+    model.load_state_dict(torch.load(MODEL_PATH, map_location="cpu"))
     model.eval()
     return model
 
@@ -77,4 +84,3 @@ if uploaded_file:
         st.write(str(e))
 else:
     st.markdown("Upload a clear leaf image to begin.")
-
