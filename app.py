@@ -6,6 +6,11 @@ from torchvision.models import resnet18, ResNet18_Weights
 from PIL import Image
 from pathlib import Path
 
+# Resolve model path
+BASE_DIR = Path(__file__).parent
+MODEL_PATH = BASE_DIR / "best_model_ft.pth"
+
+
 # Page config
 st.set_page_config(
     page_title="Plant Disease Detector",
@@ -13,7 +18,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("Plant Disease Detector")
+st.title("🌿 Plant Disease Detector")
 st.write("Upload a leaf image to detect the plant condition.")
 
 # Class names
@@ -24,10 +29,6 @@ class_names = [
     "tomato_healthy",
     "tomato_late_blight"
 ]
-
-# Resolve model path safely
-BASE_DIR = Path(__file__).parent
-MODEL_PATH = BASE_DIR / "best_model_ft.pth"
 
 # Load model
 @st.cache_resource
