@@ -72,7 +72,7 @@ if uploaded_file:
             probs = torch.softmax(outputs, dim=1)
             conf, pred = torch.max(probs, 1)
 
-        threshold = 0.75
+        threshold = 0.90
         pred_class = class_names[pred.item()]
         confidence = conf.item() * 100
 
