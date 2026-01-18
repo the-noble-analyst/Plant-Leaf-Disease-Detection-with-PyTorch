@@ -129,19 +129,23 @@ Upload a leaf image to receive:
 ## Project Structure
 
 ```text
-project/
+Plant_Desease_Detector/
+├── assets/                    # Screenshots for README
 ├── data/
 │   ├── train/
 │   ├── val/
 │   └── test/
-├── notebook.ipynb
-├── train.py
-├── infer.py
-├── app.py
-├── best_model.pth
-├── best_model_ft.pth
+├── new_data/
+│   ├── tomato_early_blight/
+│   └── tomato_late_blight/
+├── app.py                     # Streamlit app
+├── best_model_ft.pth          # Final trained model
+├── plant_disease_detector.ipynb
 ├── requirements.txt
-└── README.md
+├── runtime.txt
+├── README.md
+├── LICENSE
+
 ```
 
 ---
